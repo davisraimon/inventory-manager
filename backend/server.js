@@ -21,6 +21,9 @@ connection.once("open", function () {
 app.listen(PORT, function () {
   console.log("Server is running on Port: " + PORT);
 });
+
+// Get All Items
+
 inventory_routes.route("/").get(function (req, res) {
   Inventory.find(function (err, mst) {
     if (err) {
@@ -30,21 +33,50 @@ inventory_routes.route("/").get(function (req, res) {
     }
   });
 });
+
+// Get an Item
+
 inventory_routes.route("/:id").get(function (req, res) {
   let id = req.params.id;
-  Inventory.findById(id, function (err, todo) {
-    res.json(todo);
+  Inventory.findById(id, function (err, mst) {
+    res.json(mst);
   });
 });
 
-inventory_routes.route('/add').post(function(req, res) {
-  console.log(req.body)
+// Add Operation
+
+inventory_routes.route("/add").post(function (req, res) {
+  console.log(req.body);
   let inventory_item = new Inventory(req.body);
-  inventory_item.save()
-      .then(inventory_item => {
-          res.status(200).json({'todo': 'todo added successfully'});
+  inventory_item
+    .save()
+    .then((inventory_item) => {
+      res.status(200).json({ mst: "mst item added successfully" });
+    })
+    .catch((err) => {
+      res.status(400).send("adding new mst item failed");
+    });
+});
+
+// Update Operation 
+
+inventory_routes.route("/update/:id").post(function (req, res) {
+  Inventory.findById(req.params.id, function (err, mst) {
+    if (!mst) res.status(404).send("mst item is not found");
+    else mst.product_id = req.body.product_id;
+    mst.brand_id = req.body.brand_id;
+    mst.name = req.body.name;
+    mst.description = req.body.description;
+    mst.quantity = req.body.quantity;
+    mst.per_quanitity_price = req.body.per_quanitity_price;
+    mst.sum_quantity_price = req.body.sum_quantity_price;
+    mst
+      .save()
+      .then((mst) => {
+        res.json("mst item updated!");
       })
-      .catch(err => {
-          res.status(400).send('adding new todo failed');
+      .catch((err) => {
+        res.status(400).send("mst item Update not possible");
       });
+  });
 });

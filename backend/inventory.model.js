@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 let inventory_mst = new Schema({
-    producet_id: {
+    product_id: {
         type: String
     },
     brand_id: {

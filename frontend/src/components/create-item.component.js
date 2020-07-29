@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 export default function CreateItem() {
   const [product_id, setproduct_id] = useState("");
   const [brand_id, setbrand_id] = useState("");
@@ -14,6 +15,18 @@ export default function CreateItem() {
         <form
           onSubmit={(e) => {
             e.preventDefault();
+            const newItem = {
+              "product_id": product_id,
+              "brand_id": brand_id,
+              "name": name,
+              "description": desc,
+              "quantity": "1",
+              "per_quanitity_price": price,
+              "sum_quantity_price": "420",
+            };
+            axios
+              .post("http://localhost:4000/inventory/add", newItem)
+              .then((res) => console.log(res.data));
           }}
         >
           <div className="form-group" style={{ width: 400 }}>

@@ -1,13 +1,23 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
+
 export default function CreateItem() {
+  let history = useHistory();
   const [product_id, setproduct_id] = useState("");
   const [brand_id, setbrand_id] = useState("");
   const [name, setname] = useState("");
   const [desc, setdesc] = useState("");
   const [price, setprice] = useState("");
-  const [category, setcategory] = useState("");
-  const [qty, setqty] = useState("0");
+  const [category, setcategory] = useState("None");
+  function clearFields() {
+    setproduct_id("");
+    setbrand_id("");
+    setname("");
+    setdesc("");
+    setprice("");
+    setcategory("None");
+  }
   return (
     <div>
       <div style={{ marginTop: 10 }}>
@@ -16,17 +26,17 @@ export default function CreateItem() {
           onSubmit={(e) => {
             e.preventDefault();
             const newItem = {
-              "product_id": product_id,
-              "brand_id": brand_id,
-              "name": name,
-              "description": desc,
-              "quantity": "1",
-              "per_quanitity_price": price,
-              "sum_quantity_price": "420",
+              product_id: product_id,
+              brand_id: brand_id,
+              name: name,
+              description: desc,
+              category: category,
+              per_quanitity_price: price,
             };
             axios
               .post("http://localhost:4000/inventory/add", newItem)
-              .then((res) => console.log(res.data));
+              .then((res) => console.log(newItem, res.data));
+            history.push("/");
           }}
         >
           <div className="form-group" style={{ width: 400 }}>
@@ -40,20 +50,26 @@ export default function CreateItem() {
                 setcategory(e.target.value);
               }}
             >
-              <option id="0" value={0}>
+              <option id="0" value={"None"}>
+                None
+              </option>
+              <option id="1" value={"Electronics"}>
                 Electronics
               </option>
-              <option id="1" value={1}>
+              <option id="2" value={"Fashion"}>
                 Fashion
               </option>
-              <option id="2" value={2}>
+              <option id="3" value={"Grocery"}>
                 Grocery
               </option>
-              <option id="3" value={3}>
+              <option id="4" value={"Cutlery"}>
                 Cutlery
               </option>
-              <option id="4" value={4}>
+              <option id="5" value={"Frozen"}>
                 Frozen
+              </option>
+              <option id="6" value={"Stationary"}>
+                Stationary
               </option>
             </select>
           </div>
@@ -118,7 +134,14 @@ export default function CreateItem() {
             />
           </div>
           <div className="form-group">
-            <input type="submit" value="Add Item" className="btn btn-primary" />
+            <input type="submit" value="Add" className="btn btn-primary" />
+            <input
+              style={{ marginLeft: 8 }}
+              type="submit"
+              value="Reset"
+              className="btn btn-primary"
+              onClick={clearFields}
+            />
           </div>
         </form>
       </div>

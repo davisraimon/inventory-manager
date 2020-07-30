@@ -46,7 +46,6 @@ inventory_routes.route("/:id").get(function (req, res) {
 // Add Operation
 
 inventory_routes.route("/add").post(function (req, res) {
-  console.log(req.body);
   let inventory_item = new Inventory(req.body);
   inventory_item
     .save()
@@ -58,7 +57,7 @@ inventory_routes.route("/add").post(function (req, res) {
     });
 });
 
-// Update Operation 
+// Update Operation
 
 inventory_routes.route("/update/:id").post(function (req, res) {
   Inventory.findById(req.params.id, function (err, mst) {

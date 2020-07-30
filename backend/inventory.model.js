@@ -13,13 +13,10 @@ let inventory_mst = new Schema({
     description: {
         type: String
     },
-    quantity: {
+    category: {
         type: String
     },
     per_quanitity_price: {
-        type: String
-    },
-    sum_quantity_price: {
         type: String
     }
 });

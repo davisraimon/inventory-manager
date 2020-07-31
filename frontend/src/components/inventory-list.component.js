@@ -1,17 +1,29 @@
 import React, { Component } from "react";
+import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
+import editlogo from "../edit.jpg";
+import deletelogo from "../delete.jpg";
 import axios from "axios";
 
 const DisplayItemList = (props) => (
-  <tr>
+  <tr onDoubleClick={()=>{}}>
     <td>{props.data.product_id}</td>
     <td>{props.data.name}</td>
     <td>{props.data.description}</td>
-    <td>{props.data.brand_id}</td>    
+    <td>{props.data.brand_id}</td>
     <td>{props.data.category}</td>
     <td>{props.data.per_quanitity_price}</td>
+    <td></td>
+    <td></td>
     <td>
-      <Link to={"/edit/" + props.data._id}>Edit</Link>
+      <Link to={"/edit/" + props.data._id}>
+        <img src={editlogo} width="30" height="30" />
+      </Link>
+    </td>
+    <td>
+      <Link to={"/delete/" + props.data._id}>
+        <img src={deletelogo} width="30" height="30" />
+      </Link>
     </td>
   </tr>
 );
@@ -26,11 +38,14 @@ export default class InventoryList extends Component {
       .get("http://localhost:4000/inventory/")
       .then((response) => {
         this.setState({ list: response.data });
-        console.log(this.state.list);
       })
       .catch(function (error) {
         console.log(error);
       });
+  }
+
+  onDeleteClick(id) {
+    alert(id);
   }
 
   displayItemMstMethod() {
@@ -50,8 +65,11 @@ export default class InventoryList extends Component {
               <th>Description</th>
               <th>Brand ID</th>
               <th>Category</th>
-              <th>Price</th>             
-              <th>Action</th>
+              <th>Price</th>
+              <th>Current Stock</th>
+              <th>Required Stock</th>
+              <th>Edit</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>{this.displayItemMstMethod()}</tbody>

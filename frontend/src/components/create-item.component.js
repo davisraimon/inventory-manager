@@ -137,7 +137,6 @@ export default function CreateItem() {
             <input type="submit" value="Add" className="btn btn-primary" />
             <input
               style={{ marginLeft: 8 }}
-              type="submit"
               value="Reset"
               className="btn btn-primary"
               onClick={clearFields}

@@ -79,3 +79,12 @@ inventory_routes.route("/update/:id").post(function (req, res) {
       });
   });
 });
+
+// Delete Operation
+
+inventory_routes.route("/delete/:id").get(function (req, res) {
+  let id = req.params.id;
+  Inventory.deleteOne({ _id : id }, function (err, mst) {
+    res.json("Deleted the record");
+  });
+});

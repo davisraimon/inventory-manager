@@ -45,11 +45,20 @@ inventory_routes.route("/purchaseorders").get(function (req, res) {
   });
 });
 
-// Get an Item
+// Get an Item By _ID
 
 inventory_routes.route("/:id").get(function (req, res) {
   let id = req.params.id;
   Inventory.findById(id, function (err, mst) {
+    res.json(mst);
+  });
+});
+
+// Get an Item By Product ID
+
+inventory_routes.route("/product_id/:product_id").get(function (req, res) {
+  let id = req.params.product_id;
+  Inventory.find({ product_id: id }, function (err, mst) {
     res.json(mst);
   });
 });
@@ -65,6 +74,18 @@ inventory_routes.route("/add").post(function (req, res) {
     })
     .catch((err) => {
       res.status(400).send("adding new mst item failed");
+    });
+});
+
+inventory_routes.route("/purchaseorders/add").post(function (req, res) {
+  let purchase_order = new PurchaseOrders(req.body);
+  purchase_order
+    .save()
+    .then((inventory_item) => {
+      res.status(200).json({ mst: "purchase order created successfully!" });
+    })
+    .catch((err) => {
+      res.status(400).send("purchase could not be created");
     });
 });
 

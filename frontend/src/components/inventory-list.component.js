@@ -15,12 +15,11 @@ const DisplayItemList = (props) => (
     <td>{props.data.per_quanitity_price}</td>
     <td>{props.data.current_stock}</td>
     <td>{props.data.required_stock}</td>
-    <td>
+    <td style={{display:"flex"}}>
       <Link to={"/edit/" + props.data._id}>
         <img src={editlogo} width="30" height="30" />
       </Link>
-    </td>
-    <td>
+        <div style={{width:16}}></div>
       <Link to={"/delete/" + props.data._id}>
         <img src={deletelogo} width="30" height="30" />
       </Link>
@@ -64,8 +63,7 @@ export default class InventoryList extends Component {
               <th>Price</th>
               <th>Current Stock</th>
               <th>Required Stock</th>
-              <th>Edit</th>
-              <th>Delete</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>{this.displayItemMstMethod()}</tbody>

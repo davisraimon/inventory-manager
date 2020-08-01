@@ -6,15 +6,9 @@ import deletelogo from "../delete.jpg";
 import axios from "axios";
 
 const DisplayItemList = (props) => (
-  <tr onDoubleClick={()=>{}}>
+  <tr onDoubleClick={() => {}}>
     <td>{props.data.product_id}</td>
-    <td>{props.data.name}</td>
-    <td>{props.data.description}</td>
-    <td>{props.data.brand_id}</td>
-    <td>{props.data.category}</td>
-    <td>{props.data.per_quanitity_price}</td>
-    <td>{props.data.current_stock}</td>
-    <td>{props.data.required_stock}</td>
+    <td>{props.data.status}</td>
     <td>
       <Link to={"/edit/" + props.data._id}>
         <img src={editlogo} width="30" height="30" />
@@ -28,20 +22,24 @@ const DisplayItemList = (props) => (
   </tr>
 );
 
-export default class InventoryList extends Component {
+export default class PurchaseOrders extends Component {
   constructor(props) {
     super(props);
     this.state = { list: [] };
   }
   componentDidMount() {
     axios
-      .get("http://localhost:4000/inventory/")
+      .get("http://localhost:4000/inventory/purchaseorders/")
       .then((response) => {
         this.setState({ list: response.data });
       })
       .catch(function (error) {
         console.log(error);
       });
+  }
+
+  onDeleteClick(id) {
+    alert(id);
   }
 
   displayItemMstMethod() {
@@ -52,20 +50,14 @@ export default class InventoryList extends Component {
   render() {
     return (
       <div>
-        <h3>Inventory Master Data</h3>
+        <h3>Purchase Orders</h3>
         <table className="table table-striped" style={{ marginTop: 20 }}>
           <thead>
             <tr>
               <th>Product ID</th>
-              <th>Product Name</th>
-              <th>Description</th>
-              <th>Brand ID</th>
-              <th>Category</th>
-              <th>Price</th>
-              <th>Current Stock</th>
-              <th>Required Stock</th>
-              <th>Edit</th>
-              <th>Delete</th>
+              <th>Status</th>
+              <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>{this.displayItemMstMethod()}</tbody>

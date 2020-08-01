@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const inventory_routes = express.Router();
 const PORT = 4000;
 let Inventory = require("./inventory.model");
+let PurchaseOrders = require("./purchase-orders.model");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -26,6 +27,16 @@ app.listen(PORT, function () {
 
 inventory_routes.route("/").get(function (req, res) {
   Inventory.find(function (err, mst) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.json(mst);
+    }
+  });
+});
+
+inventory_routes.route("/purchaseorders").get(function (req, res) {
+  PurchaseOrders.find(function (err, mst) {
     if (err) {
       console.log(err);
     } else {
@@ -69,6 +80,8 @@ inventory_routes.route("/update/:id").post(function (req, res) {
     mst.quantity = req.body.quantity;
     mst.per_quanitity_price = req.body.per_quanitity_price;
     mst.sum_quantity_price = req.body.sum_quantity_price;
+    mst.current_stock = req.body.current_stock;
+    mst.required_stock = req.body.required_stock;
     mst
       .save()
       .then((mst) => {
@@ -84,7 +97,7 @@ inventory_routes.route("/update/:id").post(function (req, res) {
 
 inventory_routes.route("/delete/:id").get(function (req, res) {
   let id = req.params.id;
-  Inventory.deleteOne({ _id : id }, function (err, mst) {
+  Inventory.deleteOne({ _id: id }, function (err, mst) {
     res.json("Deleted the record");
   });
 });

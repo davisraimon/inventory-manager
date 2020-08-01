@@ -10,6 +10,8 @@ export default function CreateItem() {
   const [desc, setdesc] = useState("");
   const [price, setprice] = useState("");
   const [category, setcategory] = useState("None");
+  const [currentstock, setCurrentStock] = useState("0");
+  const [requiredstock, setRequireStock] = useState("0");
   function clearFields() {
     setproduct_id("");
     setbrand_id("");
@@ -17,9 +19,11 @@ export default function CreateItem() {
     setdesc("");
     setprice("");
     setcategory("None");
+    setCurrentStock("0");
+    setRequireStock("0");
   }
   return (
-    <div>
+    <div className="container">
       <div style={{ marginTop: 10 }}>
         <h3>Create Inventory Item</h3>
         <form
@@ -32,6 +36,8 @@ export default function CreateItem() {
               description: desc,
               category: category,
               per_quanitity_price: price,
+              current_stock: currentstock,
+              required_stock: requiredstock,
             };
             axios
               .post("http://localhost:4000/inventory/add", newItem)
@@ -76,6 +82,7 @@ export default function CreateItem() {
           <div className="form-group" style={{ width: 400 }}>
             <label>Product ID : </label>
             <input
+              required
               id="p_id"
               type="text"
               className="form-control"
@@ -88,6 +95,7 @@ export default function CreateItem() {
           <div className="form-group" style={{ width: 400 }}>
             <label>Product Name : </label>
             <input
+              required
               id="name"
               type="text"
               className="form-control"
@@ -124,6 +132,7 @@ export default function CreateItem() {
           <div className="form-group" style={{ width: 400 }}>
             <label>Price : </label>
             <input
+              required
               id="desc"
               type="text"
               className="form-control"
@@ -133,13 +142,53 @@ export default function CreateItem() {
               }}
             />
           </div>
+          <div className="form-group" style={{ width: 400, display: "flex" }}>
+            <div>
+              <label>Current Stock: </label>
+              <input
+                id="desc"
+                type="text"
+                className="form-control"
+                value={currentstock}
+                onChange={(e) => {
+                  setCurrentStock(e.target.value);
+                }}
+              />
+            </div>
+            <div style={{ width: 8 }}></div>
+            <div>
+              <label>Required Stock: </label>
+              <input
+                id="desc"
+                type="text"
+                className="form-control"
+                value={requiredstock}
+                onChange={(e) => {
+                  setRequireStock(e.target.value);
+                }}
+              />
+            </div>
+          </div>
           <div className="form-group">
-            <input type="submit" value="Add" className="btn btn-primary" />
             <input
-              style={{ marginLeft: 8 }}
+              type="submit"
+              value="Add"
+              className="btn btn-primary"
+              style={{ width: 100 }}
+            />
+            <input
+              style={{ marginLeft: 8, width: 184 }}
               value="Reset"
               className="btn btn-primary"
               onClick={clearFields}
+            />
+            <input
+              value="Cancel"
+              className="btn btn-danger"
+              onClick={() => {
+                history.push("/");
+              }}
+              style={{ marginLeft: 8, width: 100 }}
             />
           </div>
         </form>

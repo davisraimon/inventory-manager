@@ -4,19 +4,17 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import EditItem from "./components/edit-item.component";
 import CreateItem from "./components/create-item.component";
 import InventoryList from "./components/inventory-list.component";
-import DeleteItem from "./components/delete-item.component"
+import DeleteItem from "./components/delete-item.component";
+import PurchaseOrders from "./components/purchase-orders.component";
 import logo from "./logo.jpg";
 
 class App extends Component {
   render() {
     return (
       <Router>
-        <div style={{paddingLeft:32,paddingRight:32}}>
+        <div style={{ paddingLeft: 32, paddingRight: 32 }}>
           <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <a
-              className="navbar-brand"
-              href="https://codingthesmartway.com"
-            >
+            <a className="navbar-brand" href="https://codingthesmartway.com">
               <img
                 src={logo}
                 width="30"
@@ -39,6 +37,11 @@ class App extends Component {
                     Add Item
                   </Link>
                 </li>
+                <li className="navbar-item">
+                  <Link to="/purchaseorders" className="nav-link">
+                    Purchase Orders
+                  </Link>
+                </li>
               </ul>
             </div>
           </nav>
@@ -48,6 +51,7 @@ class App extends Component {
           <Route path="/edit/:id" component={EditItem} />
           <Route path="/create" component={CreateItem} />
           <Route path="/delete/:id" component={DeleteItem} />
+          <Route path="/purchaseorders/" component={PurchaseOrders} />
         </div>
       </Router>
     );

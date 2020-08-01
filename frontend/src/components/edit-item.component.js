@@ -14,6 +14,8 @@ export default function EditItem(props) {
         setdesc(response.data.description);
         setprice(response.data.per_quanitity_price);
         setcategory(response.data.category);
+        setCurrentStock(response.data.current_stock);
+        setRequireStock(response.data.required_stock);
       })
       .catch(function (error) {
         console.log(error);
@@ -25,10 +27,12 @@ export default function EditItem(props) {
   const [desc, setdesc] = useState("");
   const [price, setprice] = useState("");
   const [category, setcategory] = useState("");
+  const [currentstock, setCurrentStock] = useState("0");
+  const [requiredstock, setRequireStock] = useState("0");
   return (
-    <div>
+    <div className="container">
       <div style={{ marginTop: 10 }}>
-        <h3>Create Inventory Item</h3>
+        <h3>Edit Inventory Item</h3>
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -39,7 +43,10 @@ export default function EditItem(props) {
               description: desc,
               category: category,
               per_quanitity_price: price,
+              current_stock: currentstock,
+              required_stock: requiredstock,
             };
+            console.log(updatedItem, "updated");
             axios
               .post(
                 "http://localhost:4000/inventory/update/" +
@@ -87,6 +94,7 @@ export default function EditItem(props) {
           <div className="form-group" style={{ width: 400 }}>
             <label>Product ID : </label>
             <input
+              required
               id="p_id"
               type="text"
               className="form-control"
@@ -99,6 +107,7 @@ export default function EditItem(props) {
           <div className="form-group" style={{ width: 400 }}>
             <label>Product Name : </label>
             <input
+              required
               id="name"
               type="text"
               className="form-control"
@@ -135,6 +144,7 @@ export default function EditItem(props) {
           <div className="form-group" style={{ width: 400 }}>
             <label>Price : </label>
             <input
+              required
               id="desc"
               type="text"
               className="form-control"
@@ -144,8 +154,43 @@ export default function EditItem(props) {
               }}
             />
           </div>
+          <div className="form-group" style={{ width: 400, display: "flex" }}>
+            <div>
+              <label>Current Stock: </label>
+              <input
+                id="desc"
+                type="text"
+                className="form-control"
+                value={currentstock}
+                onChange={(e) => {
+                  setCurrentStock(e.target.value);
+                }}
+              />
+            </div>
+            <div style={{ width: 8 }}></div>
+            <div>
+              <label>Required Stock: </label>
+              <input
+                id="desc"
+                type="text"
+                className="form-control"
+                value={requiredstock}
+                onChange={(e) => {
+                  setRequireStock(e.target.value);
+                }}
+              />
+            </div>
+          </div>
           <div className="form-group">
-            <input type="submit" value="Update" className="btn btn-primary" />
+            <input type="submit" value="Update" className="btn btn-primary" style={{ width: 196 }} />
+            <input
+              value="Cancel"
+              className="btn btn-danger"
+              onClick={() => {
+                history.push("/");
+              }}
+              style={{ marginLeft: 8, width: 196 }}
+            />
           </div>
         </form>
       </div>

@@ -6,6 +6,8 @@ import CreateItem from "./components/create-item.component";
 import InventoryList from "./components/inventory-list.component";
 import DeleteItem from "./components/delete-item.component";
 import PurchaseOrders from "./components/purchase-orders.component";
+import CreatePurchaseOrder from "./components/create-purchase-order.component";
+
 import logo from "./logo.jpg";
 
 class App extends Component {
@@ -15,12 +17,7 @@ class App extends Component {
         <div style={{ paddingLeft: 32, paddingRight: 32 }}>
           <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <a className="navbar-brand" href="https://codingthesmartway.com">
-              <img
-                src={logo}
-                width="30"
-                height="30"
-                alt="CodingTheSmartWay.com"
-              />
+              <img src={logo} width="30" height="30" />
             </a>
             <Link to="/" className="navbar-brand">
               Inventory Manager
@@ -29,12 +26,7 @@ class App extends Component {
               <ul className="navbar-nav mr-auto">
                 <li className="navbar-item">
                   <Link to="/" className="nav-link">
-                    List
-                  </Link>
-                </li>
-                <li className="navbar-item">
-                  <Link to="/create" className="nav-link">
-                    Add Item
+                    Inventory List
                   </Link>
                 </li>
                 <li className="navbar-item">
@@ -52,6 +44,7 @@ class App extends Component {
           <Route path="/create" component={CreateItem} />
           <Route path="/delete/:id" component={DeleteItem} />
           <Route path="/purchaseorders/" component={PurchaseOrders} />
+          <Route path="/createpurchaseorder/" component={CreatePurchaseOrder} />
         </div>
       </Router>
     );

@@ -6,7 +6,7 @@ import deletelogo from "../delete.jpg";
 import axios from "axios";
 
 const DisplayItemList = (props) => (
-  <tr onDoubleClick={()=>{}}>
+  <tr onDoubleClick={() => {}}>
     <td>{props.data.product_id}</td>
     <td>{props.data.name}</td>
     <td>{props.data.description}</td>
@@ -15,11 +15,11 @@ const DisplayItemList = (props) => (
     <td>{props.data.per_quanitity_price}</td>
     <td>{props.data.current_stock}</td>
     <td>{props.data.required_stock}</td>
-    <td style={{display:"flex"}}>
+    <td style={{ display: "flex" }}>
       <Link to={"/edit/" + props.data._id}>
         <img src={editlogo} width="30" height="30" />
       </Link>
-        <div style={{width:16}}></div>
+      <div style={{ width: 16 }}></div>
       <Link to={"/delete/" + props.data._id}>
         <img src={deletelogo} width="30" height="30" />
       </Link>
@@ -52,6 +52,14 @@ export default class InventoryList extends Component {
     return (
       <div>
         <h3>Inventory Master Data</h3>
+        <input
+          defaultValue="New Item"
+          className="btn btn-success"
+          onClick={() => {
+            window.location.replace("http://localhost:3000/create");
+          }}
+          style={{ width: 120, float: "right", marginBottom: 8 }}
+        ></input>
         <table className="table table-striped" style={{ marginTop: 20 }}>
           <thead>
             <tr>

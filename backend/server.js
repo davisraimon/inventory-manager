@@ -102,6 +102,7 @@ inventory_routes.route("/update/:id").post(function (req, res) {
     mst.per_quanitity_price = req.body.per_quanitity_price;
     mst.sum_quantity_price = req.body.sum_quantity_price;
     mst.current_stock = req.body.current_stock;
+    mst.category = req.body.category;
     mst.required_stock = req.body.required_stock;
     mst
       .save()

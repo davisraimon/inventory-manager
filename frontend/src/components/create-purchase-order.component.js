@@ -25,7 +25,7 @@ export default function CreatePurchaseOrder() {
   return (
     <div className="container">
       <div style={{ marginTop: 10 }}>
-        <h3>Create an Order</h3>
+        <h3>Create Purchase Order</h3>
         <form
           onSubmit={(e) => {
             e.preventDefault();

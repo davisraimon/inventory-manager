@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import { useHistory } from "react-router-dom";
 import axios from "axios";
-import CreatePurchaseOrder from './create-purchase-order.component'
 
 const DisplayItemList = (props) => (
   <tr onDoubleClick={() => {}}>

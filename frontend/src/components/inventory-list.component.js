@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import editlogo from "../edit.jpg";
 import deletelogo from "../delete.jpg";
@@ -17,11 +16,11 @@ const DisplayItemList = (props) => (
     <td>{props.data.required_stock}</td>
     <td style={{ display: "flex" }}>
       <Link to={"/edit/" + props.data._id}>
-        <img src={editlogo} width="30" height="30" />
+        <img src={editlogo} width="30" height="30" alt="editlogo"/>
       </Link>
       <div style={{ width: 16 }}></div>
       <Link to={"/delete/" + props.data._id}>
-        <img src={deletelogo} width="30" height="30" />
+        <img src={deletelogo} width="30" height="30" alt="deletelogo"/>
       </Link>
     </td>
   </tr>

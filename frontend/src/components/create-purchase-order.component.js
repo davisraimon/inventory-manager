@@ -12,6 +12,13 @@ export default function CreatePurchaseOrder() {
   const [category, setcategory] = useState("None");
   const [currentstock, setCurrentStock] = useState("0");
   const [requiredstock, setRequireStock] = useState("0");
+  const [orderquantity, setOrderquantity] = useState("1");
+  const [shippingcost, setShippingcost] = useState("500");
+  const [storename, setStorename] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [zipcode, setZipcode] = useState("");
+  const [contact, setContact] = useState("");
   function clearFields() {
     setproduct_id("");
     setbrand_id("");
@@ -22,6 +29,33 @@ export default function CreatePurchaseOrder() {
     setCurrentStock("0");
     setRequireStock("0");
   }
+  function onFocusout() {
+    axios
+      .get("http://localhost:4000/inventory/product_id/" + product_id)
+      .then((response) => {
+        if (response.data[0] == undefined) {
+          document.getElementById("p_id").focus();
+        } else {
+          setname(response.data[0].name);
+          setdesc(response.data[0].description);
+          setbrand_id(response.data[0].brand_id);
+          setCurrentStock(response.data[0].current_stock);
+          setRequireStock(response.data[0].required_stock);
+          setprice(response.data[0].per_quanitity_price);
+          if (
+            response.data[0].required_stock - response.data[0].current_stock >
+            0
+          ) {
+            setOrderquantity(
+              response.data[0].required_stock - response.data[0].current_stock
+            );
+          }
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
   return (
     <div className="container">
       <div style={{ marginTop: 10 }}>
@@ -29,20 +63,6 @@ export default function CreatePurchaseOrder() {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            const newItem = {
-              product_id: product_id,
-              brand_id: brand_id,
-              name: name,
-              description: desc,
-              category: category,
-              per_quanitity_price: price,
-              current_stock: currentstock,
-              required_stock: requiredstock,
-            };
-            axios
-              .post("http://localhost:4000/inventory/add", newItem)
-              .then((res) => console.log(newItem, res.data));
-            history.push("/");
           }}
         >
           <div style={{ display: "flex" }}>
@@ -50,7 +70,9 @@ export default function CreatePurchaseOrder() {
               <div className="form-group" style={{ width: 400 }}>
                 <label>Product ID : </label>
                 <input
+                  onBlur={onFocusout}
                   required
+                  placeholder="Enter a Valid Product ID"
                   id="p_id"
                   type="text"
                   className="form-control"
@@ -63,6 +85,7 @@ export default function CreatePurchaseOrder() {
               <div className="form-group" style={{ width: 400 }}>
                 <label>Product Name : </label>
                 <input
+                  disabled
                   required
                   id="name"
                   type="text"
@@ -76,6 +99,7 @@ export default function CreatePurchaseOrder() {
               <div className="form-group" style={{ width: 400 }}>
                 <label>Description : </label>
                 <input
+                  disabled
                   id="desc"
                   type="text"
                   className="form-control"
@@ -88,6 +112,7 @@ export default function CreatePurchaseOrder() {
               <div className="form-group" style={{ width: 400 }}>
                 <label>Brand ID : </label>
                 <input
+                  disabled
                   id="b_id"
                   type="text"
                   className="form-control"
@@ -104,6 +129,7 @@ export default function CreatePurchaseOrder() {
                 <div>
                   <label>Current Stock: </label>
                   <input
+                    disabled
                     id="desc"
                     type="text"
                     className="form-control"
@@ -117,6 +143,7 @@ export default function CreatePurchaseOrder() {
                 <div>
                   <label>Required Stock: </label>
                   <input
+                    disabled
                     id="desc"
                     type="text"
                     className="form-control"
@@ -144,16 +171,17 @@ export default function CreatePurchaseOrder() {
                   value="Cancel"
                   className="btn btn-danger"
                   onClick={() => {
-                    history.push("/");
+                    history.push("/purchaseorders");
                   }}
                   style={{ marginLeft: 8, width: 100 }}
                 />
               </div>
             </div>
-            <div style={{marginLeft:16}}>
+            <div style={{ marginLeft: 16 }}>
               <div className="form-group" style={{ width: 400 }}>
                 <label>Per Quantity Price : </label>
                 <input
+                  disabled
                   required
                   id="desc"
                   type="text"
@@ -171,15 +199,16 @@ export default function CreatePurchaseOrder() {
                   id="desc"
                   type="text"
                   className="form-control"
-                  value={price}
+                  value={orderquantity}
                   onChange={(e) => {
-                    setprice(e.target.value);
+                    setOrderquantity(e.target.value);
                   }}
                 />
               </div>
               <div className="form-group" style={{ width: 400 }}>
                 <label>Total Price : </label>
                 <input
+                  disabled
                   required
                   id="desc"
                   type="text"
@@ -193,26 +222,99 @@ export default function CreatePurchaseOrder() {
               <div className="form-group" style={{ width: 400 }}>
                 <label>Shipping Costs : </label>
                 <input
+                  disabled
                   required
                   id="desc"
                   type="text"
                   className="form-control"
-                  value={price}
+                  value={shippingcost}
                   onChange={(e) => {
-                    setprice(e.target.value);
+                    setShippingcost(e.target.value);
                   }}
                 />
               </div>
               <div className="form-group" style={{ width: 400 }}>
                 <label>Total Amount to be Paid : </label>
                 <input
+                  disabled
                   required
                   id="desc"
                   type="text"
                   className="form-control"
-                  value={price}
+                  value={orderquantity * price + parseInt(shippingcost)}
                   onChange={(e) => {
                     setprice(e.target.value);
+                  }}
+                />
+              </div>
+            </div>
+            <div style={{ marginLeft: 16 }}>
+              <div className="form-group" style={{ width: 300 }}>
+                <label>Store Name : </label>
+                <input
+                  required
+                  id="desc"
+                  type="text"
+                  className="form-control"
+                  value={storename}
+                  onChange={(e) => {
+                    setStorename(e.target.value);
+                  }}
+                />
+              </div>
+              <div
+                className="form-group"
+                style={{ width: 300, display: "flex" }}
+              >
+                <div>
+                  <label>City: </label>
+                  <input
+                    id="desc"
+                    type="text"
+                    className="form-control"
+                    value={city}
+                    onChange={(e) => {
+                      setCity(e.target.value);
+                    }}
+                  />
+                </div>
+                <div style={{ width: 8 }}></div>
+                <div>
+                  <label>State: </label>
+                  <input
+                    id="desc"
+                    type="text"
+                    className="form-control"
+                    value={state}
+                    onChange={(e) => {
+                      setState(e.target.value);
+                    }}
+                  />
+                </div>
+              </div>
+              <div className="form-group" style={{ width: 300 }}>
+                <label>Zip Code : </label>
+                <input
+                  required
+                  id="desc"
+                  type="text"
+                  className="form-control"
+                  value={zipcode}
+                  onChange={(e) => {
+                    setZipcode(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="form-group" style={{ width: 300 }}>
+                <label>Contact : </label>
+                <input
+                  required
+                  id="desc"
+                  type="text"
+                  className="form-control"
+                  value={contact}
+                  onChange={(e) => {
+                    setContact(e.target.value);
                   }}
                 />
               </div>

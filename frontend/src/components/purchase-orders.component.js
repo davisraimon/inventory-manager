@@ -10,7 +10,7 @@ const DisplayItemList = (props) => (
     <td>{props.mst_data.current_stock}</td>
     <td>{props.mst_data.required_stock}</td>
     <td>
-      <a className={`${badgeColor(props.data.order_status)}`}>
+      <a style={{width:100}} className={`${badgeColor(props.data.order_status)}`}>
         {props.data.order_status}
       </a>
     </td>
@@ -27,6 +27,8 @@ function badgeColor(caption) {
     case "Order Recieved":
       return "badge badge-primary";
     case "Order Placed":
+      return "badge badge-light";
+      case "New":
       return "badge badge-light";
     case "Shipped":
       return "badge badge-warning";

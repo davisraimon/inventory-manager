@@ -8,7 +8,7 @@ export default function DeleteItem(props) {
     axios
       .get("http://localhost:4000/inventory/delete/" + props.match.params.id)
       .then((response) => {
-        history.push("/");
+        history.push({pathname:"/",toastVisibilityForDelete:true});
       })
       .catch(function (error) {
         console.log(error);

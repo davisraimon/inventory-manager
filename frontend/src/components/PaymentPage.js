@@ -3,13 +3,16 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import StripeCheckout from "react-stripe-checkout";
 import axios from "axios";
+import { useHistory, Redirect } from "react-router-dom";
 
 const stripeKey =
   "pk_test_51HF2pIHVEY85bCgtP9G9ccluezSoeHNuJC3FPDu8UioWSDO19Pq8PlXJfPZGTuELEuuNzgzkKiO7wWxG9K71uuBM001RM4Jkq6";
 const stripePromise = loadStripe(stripeKey);
 
 export default function PaymentPage(props) {
+  let history = useHistory();
   const [error, setError] = useState(null);
+  const [buttondisabled, setbuttondisabled] = useState(false);
   function handleToken(token, addresses) {
     const newOrder = {
       payment_status: "success",
@@ -20,8 +23,11 @@ export default function PaymentPage(props) {
     };
     axios
       .post("http://localhost:4000/inventory/checkout", newOrder)
-      .then((res) => console.log(token, res.data));
+      .then((res) => {
+        history.push({pathname:"/purchaseorders",toastVisibility:true});
+      });
   }
+  
   return (
     <div>
       <Elements stripe={stripePromise}>
@@ -40,6 +46,7 @@ export default function PaymentPage(props) {
             style={{ width: 100 }}
           />
         </StripeCheckout>
+        
       </Elements>
     </div>
   );

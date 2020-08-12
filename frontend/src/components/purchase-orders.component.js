@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const DisplayItemList = (props) => (
   <tr onDoubleClick={() => {}}>
@@ -15,7 +17,6 @@ const DisplayItemList = (props) => (
     <td>{props.mst_data.required_stock}</td>
     <td>{props.data.order_quantity}</td>
     <td>{props.mst_data.per_quanitity_price}</td>
-    
     <td>{props.data.total_price}</td>
     <td>{props.data.payment_status}</td>
   </tr>
@@ -39,11 +40,12 @@ function badgeColor(caption) {
   }
 }
 
-function test() {}
+const notify = () => toast.info("Order Placed!",{position: "bottom-left"});
 export default class PurchaseOrders extends Component {
   constructor(props) {
     super(props);
     this.state = { purchase_orders: [], inventory_mst: [] };
+    if(props.location.toastVisibility){notify();} 
   }
   componentDidMount() {
     axios
@@ -77,6 +79,7 @@ export default class PurchaseOrders extends Component {
   render() {
     return (
       <div>
+        <ToastContainer />
         <h3>Purchase Orders</h3>
         <input
           defaultValue="New Order"

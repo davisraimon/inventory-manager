@@ -54,7 +54,7 @@ export default function EditItem(props) {
                 updatedItem
               )
               .then((res) => console.log(res.data));
-            history.push("/");
+              history.push({pathname:"/",toastVisibilityForEdit:true});
           }}
         >
           <div className="form-group" style={{ width: 400 }}>

@@ -42,7 +42,7 @@ export default function CreateItem() {
             axios
               .post("http://localhost:4000/inventory/add", newItem)
               .then((res) => console.log(newItem, res.data));
-            history.push("/");
+            history.push({pathname:"/",toastVisibility:true});
           }}
         >
           <div className="form-group" style={{ width: 400 }}>
@@ -171,12 +171,14 @@ export default function CreateItem() {
           </div>
           <div className="form-group">
             <input
+              readOnly
               type="submit"
               value="Add"
               className="btn btn-primary"
               style={{ width: 100 }}
             />
             <input
+              readOnly
               style={{ marginLeft: 8, width: 184 }}
               value="Reset"
               className="btn btn-primary"

@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import editlogo from "../edit.jpg";
 import deletelogo from "../delete.jpg";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const DisplayItemList = (props) => (
   <tr onDoubleClick={() => {}}>
@@ -25,11 +27,16 @@ const DisplayItemList = (props) => (
     </td>
   </tr>
 );
-
+const notifyAdd = () => toast.info("Item added!",{position: "bottom-left"});
+const notifyEdit = () => toast.info("Item Updated!",{position: "bottom-left"});
+const notifyDelete = () => toast.error("Item Deleted!",{position: "bottom-left"});
 export default class InventoryList extends Component {
   constructor(props) {
     super(props);
     this.state = { list: [] };
+    if(props.location.toastVisibility){notifyAdd();} 
+    if(props.location.toastVisibilityForDelete){notifyDelete();} 
+    if(props.location.toastVisibilityForEdit){notifyEdit();}
   }
   componentDidMount() {
     axios
@@ -50,6 +57,7 @@ export default class InventoryList extends Component {
   render() {
     return (
       <div>
+        <ToastContainer></ToastContainer>
         <h3>Inventory Master Data</h3>
         <input
           defaultValue="New Item"

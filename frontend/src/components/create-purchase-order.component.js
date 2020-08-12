@@ -15,11 +15,6 @@ export default function CreatePurchaseOrder() {
   const [requiredstock, setRequireStock] = useState("0");
   const [orderquantity, setOrderquantity] = useState("1");
   const [shippingcost, setShippingcost] = useState("0");
-  const [storename, setStorename] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [zipcode, setZipcode] = useState("");
-  const [contact, setContact] = useState("");
   function clearFields() {
     setproduct_id("");
     setbrand_id("");
@@ -159,15 +154,19 @@ export default function CreatePurchaseOrder() {
                 <PaymentPage
                   disabled={name === ""}
                   amount={orderquantity * price + parseInt(shippingcost)}
+                  product_id={product_id}
+                  order_quantity={orderquantity}
                 ></PaymentPage>
                 <input
                   style={{ marginLeft: 8, width: 184 }}
                   value="Reset"
+                  readOnly
                   className="btn btn-primary"
                   onClick={clearFields}
                 />
                 <input
                   value="Cancel"
+                  readOnly
                   className="btn btn-danger"
                   onClick={() => {
                     history.push("/purchaseorders");

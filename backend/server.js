@@ -7,6 +7,9 @@ const inventory_routes = express.Router();
 const PORT = 4000;
 let Inventory = require("./inventory.model");
 let PurchaseOrders = require("./purchase-orders.model");
+const stripe = require("stripe")(
+  "sk_test_51HF2pIHVEY85bCgtMiX90XtiOtYT4lk0lVYV5vJukxWQPZy0PY9WrDXLtQv82ZOqCRkWuYX8hjpn78qC5W6wzkP200E33jnEul"
+);
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -23,6 +26,25 @@ app.listen(PORT, function () {
   console.log("Server is running on Port: " + PORT);
 });
 
+// checkout
+
+inventory_routes.route("/checkout").post(function (req, res) {
+  let payment_order = new PurchaseOrders({
+    product_id: req.body.product_id,
+    payment_status: req.body.payment_status,
+    order_status: req.body.order_status,
+    total_price: req.body.total_price,
+    order_quantity: req.body.order_quantity,
+  });
+  payment_order
+    .save()
+    .then((inventory_item) => {
+      res.status(200).json({ mst: "success" });
+    })
+    .catch((err) => {
+      res.status(400).send("failed");
+    });
+});
 // Get All Items
 
 inventory_routes.route("/").get(function (req, res) {

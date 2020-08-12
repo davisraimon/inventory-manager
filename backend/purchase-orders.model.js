@@ -16,5 +16,11 @@ let purchase_orders = new Schema({
   payment_status: {
     type: String,
   },
+  total_amount_to_be_paid: {
+    type: String,
+  },
+  order_date: {
+    type: Date,
+  },
 });
 module.exports = mongoose.model("purchase_orders", purchase_orders);

@@ -5,15 +5,17 @@ const DisplayItemList = (props) => (
   <tr onDoubleClick={() => {}}>
     <td>{props.data.product_id}</td>
     <td>{props.mst_data.name}</td>
-    <td>{props.mst_data.current_stock}</td>
-    <td>{props.mst_data.required_stock}</td>
+    
     <td>
       <a style={{width:100}} className={`${badgeColor(props.data.order_status)}`}>
         {props.data.order_status}
       </a>
     </td>
-    <td>{props.mst_data.per_quanitity_price}</td>
+    <td>{props.mst_data.current_stock}</td>
+    <td>{props.mst_data.required_stock}</td>
     <td>{props.data.order_quantity}</td>
+    <td>{props.mst_data.per_quanitity_price}</td>
+    
     <td>{props.data.total_price}</td>
     <td>{props.data.payment_status}</td>
   </tr>
@@ -89,11 +91,13 @@ export default class PurchaseOrders extends Component {
             <tr>
               <th>Product ID</th>
               <th>Product Name</th>
+              <th>Order Status</th>
               <th>Current Stock</th>
               <th>Required Stock</th>
-              <th>Order Status</th>
-              <th>Price</th>
+              
               <th>Order Quantity</th>
+              <th>Price</th>
+              
               <th>Total Price</th>
               <th>Payment Status</th>
             </tr>

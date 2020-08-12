@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import PaymentPage from "./PaymentPage";
 
 export default function CreatePurchaseOrder() {
   let history = useHistory();
@@ -13,7 +14,7 @@ export default function CreatePurchaseOrder() {
   const [currentstock, setCurrentStock] = useState("0");
   const [requiredstock, setRequireStock] = useState("0");
   const [orderquantity, setOrderquantity] = useState("1");
-  const [shippingcost, setShippingcost] = useState("500");
+  const [shippingcost, setShippingcost] = useState("0");
   const [storename, setStorename] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
@@ -154,13 +155,11 @@ export default function CreatePurchaseOrder() {
                   />
                 </div>
               </div>
-              <div className="form-group">
-                <input
-                  type="submit"
-                  value="Pay"
-                  className="btn btn-primary"
-                  style={{ width: 100 }}
-                />
+              <div className="form-group" style={{ display: "flex" }}>
+                <PaymentPage
+                  disabled={name === ""}
+                  amount={orderquantity * price + parseInt(shippingcost)}
+                ></PaymentPage>
                 <input
                   style={{ marginLeft: 8, width: 184 }}
                   value="Reset"
@@ -244,77 +243,6 @@ export default function CreatePurchaseOrder() {
                   value={orderquantity * price + parseInt(shippingcost)}
                   onChange={(e) => {
                     setprice(e.target.value);
-                  }}
-                />
-              </div>
-            </div>
-            <div style={{ marginLeft: 16 }}>
-              <div className="form-group" style={{ width: 300 }}>
-                <label>Store Name : </label>
-                <input
-                  required
-                  id="desc"
-                  type="text"
-                  className="form-control"
-                  value={storename}
-                  onChange={(e) => {
-                    setStorename(e.target.value);
-                  }}
-                />
-              </div>
-              <div
-                className="form-group"
-                style={{ width: 300, display: "flex" }}
-              >
-                <div>
-                  <label>City: </label>
-                  <input
-                    id="desc"
-                    type="text"
-                    className="form-control"
-                    value={city}
-                    onChange={(e) => {
-                      setCity(e.target.value);
-                    }}
-                  />
-                </div>
-                <div style={{ width: 8 }}></div>
-                <div>
-                  <label>State: </label>
-                  <input
-                    id="desc"
-                    type="text"
-                    className="form-control"
-                    value={state}
-                    onChange={(e) => {
-                      setState(e.target.value);
-                    }}
-                  />
-                </div>
-              </div>
-              <div className="form-group" style={{ width: 300 }}>
-                <label>Zip Code : </label>
-                <input
-                  required
-                  id="desc"
-                  type="text"
-                  className="form-control"
-                  value={zipcode}
-                  onChange={(e) => {
-                    setZipcode(e.target.value);
-                  }}
-                />
-              </div>
-              <div className="form-group" style={{ width: 300 }}>
-                <label>Contact : </label>
-                <input
-                  required
-                  id="desc"
-                  type="text"
-                  className="form-control"
-                  value={contact}
-                  onChange={(e) => {
-                    setContact(e.target.value);
                   }}
                 />
               </div>

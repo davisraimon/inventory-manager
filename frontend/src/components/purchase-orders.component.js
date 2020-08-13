@@ -1,15 +1,18 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const DisplayItemList = (props) => (
   <tr onDoubleClick={() => {}}>
     <td>{props.data.product_id}</td>
     <td>{props.mst_data.name}</td>
-    
+
     <td>
-      <a style={{width:100}} className={`${badgeColor(props.data.order_status)}`}>
+      <a
+        style={{ width: 100 }}
+        className={`${badgeColor(props.data.order_status)}`}
+      >
         {props.data.order_status}
       </a>
     </td>
@@ -29,7 +32,7 @@ function badgeColor(caption) {
       return "badge badge-primary";
     case "Order Placed":
       return "badge badge-light";
-      case "New":
+    case "New":
       return "badge badge-light";
     case "Shipped":
       return "badge badge-warning";
@@ -40,12 +43,14 @@ function badgeColor(caption) {
   }
 }
 
-const notify = () => toast.info("Order Placed!",{position: "bottom-left"});
+const notify = () => toast.info("Order Placed!", { position: "bottom-left" });
 export default class PurchaseOrders extends Component {
   constructor(props) {
     super(props);
     this.state = { purchase_orders: [], inventory_mst: [] };
-    if(props.location.toastVisibility){notify();} 
+    if (props.location.toastVisibility) {
+      notify();
+    }
   }
   componentDidMount() {
     axios
@@ -85,7 +90,9 @@ export default class PurchaseOrders extends Component {
           defaultValue="New Order"
           className="btn btn-success"
           onClick={() => {
-            window.location.replace("http://localhost:3000/createpurchaseorder");
+            window.location.replace(
+              "http://localhost:3000/createpurchaseorder"
+            );
           }}
           style={{ width: 120, float: "right", marginBottom: 8 }}
         ></input>
@@ -97,10 +104,10 @@ export default class PurchaseOrders extends Component {
               <th>Order Status</th>
               <th>Current Stock</th>
               <th>Required Stock</th>
-              
+
               <th>Order Quantity</th>
               <th>Price</th>
-              
+
               <th>Total Price</th>
               <th>Payment Status</th>
             </tr>

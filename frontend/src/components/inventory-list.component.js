@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import editlogo from "../edit.jpg";
 import deletelogo from "../delete.jpg";
 import axios from "axios";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const DisplayItemList = (props) => (
   <tr onDoubleClick={() => {}}>
@@ -18,25 +18,33 @@ const DisplayItemList = (props) => (
     <td>{props.data.required_stock}</td>
     <td style={{ display: "flex" }}>
       <Link to={"/edit/" + props.data._id}>
-        <img src={editlogo} width="30" height="30" alt="editlogo"/>
+        <img src={editlogo} width="30" height="30" alt="editlogo" />
       </Link>
       <div style={{ width: 16 }}></div>
       <Link to={"/delete/" + props.data._id}>
-        <img src={deletelogo} width="30" height="30" alt="deletelogo"/>
+        <img src={deletelogo} width="30" height="30" alt="deletelogo" />
       </Link>
     </td>
   </tr>
 );
-const notifyAdd = () => toast.info("Item added!",{position: "bottom-left"});
-const notifyEdit = () => toast.info("Item Updated!",{position: "bottom-left"});
-const notifyDelete = () => toast.error("Item Deleted!",{position: "bottom-left"});
+const notifyAdd = () => toast.info("Item added!", { position: "bottom-left" });
+const notifyEdit = () =>
+  toast.info("Item Updated!", { position: "bottom-left" });
+const notifyDelete = () =>
+  toast.error("Item Deleted!", { position: "bottom-left" });
 export default class InventoryList extends Component {
   constructor(props) {
     super(props);
     this.state = { list: [] };
-    if(props.location.toastVisibility){notifyAdd();} 
-    if(props.location.toastVisibilityForDelete){notifyDelete();} 
-    if(props.location.toastVisibilityForEdit){notifyEdit();}
+    if (props.location.toastVisibility) {
+      notifyAdd();
+    }
+    if (props.location.toastVisibilityForDelete) {
+      notifyDelete();
+    }
+    if (props.location.toastVisibilityForEdit) {
+      notifyEdit();
+    }
   }
   componentDidMount() {
     axios

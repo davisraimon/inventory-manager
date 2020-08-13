@@ -42,7 +42,7 @@ export default function CreateItem() {
             axios
               .post("http://localhost:4000/inventory/add", newItem)
               .then((res) => console.log(newItem, res.data));
-            history.push({pathname:"/",toastVisibility:true});
+            history.push({ pathname: "/", toastVisibility: true });
           }}
         >
           <div className="form-group" style={{ width: 400 }}>

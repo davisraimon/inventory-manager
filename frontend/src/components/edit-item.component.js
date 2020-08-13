@@ -54,7 +54,7 @@ export default function EditItem(props) {
                 updatedItem
               )
               .then((res) => console.log(res.data));
-              history.push({pathname:"/",toastVisibilityForEdit:true});
+            history.push({ pathname: "/", toastVisibilityForEdit: true });
           }}
         >
           <div className="form-group" style={{ width: 400 }}>
@@ -182,8 +182,14 @@ export default function EditItem(props) {
             </div>
           </div>
           <div className="form-group">
-            <input type="submit" value="Update" className="btn btn-primary" style={{ width: 196 }} />
             <input
+              type="submit"
+              value="Update"
+              className="btn btn-primary"
+              style={{ width: 196 }}
+            />
+            <input
+              readOnly
               value="Cancel"
               className="btn btn-danger"
               onClick={() => {

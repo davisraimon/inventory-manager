@@ -2,12 +2,17 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import editlogo from "../edit.jpg";
 import deletelogo from "../delete.jpg";
+import orderlogo from "../ordericon.jpg";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const DisplayItemList = (props) => (
-  <tr onDoubleClick={() => {}}>
+  <tr
+    onDoubleClick={() => {
+      window.location.replace("/edit/" + props.data._id);
+    }}
+  >
     <td>{props.data.product_id}</td>
     <td>{props.data.name}</td>
     <td>{props.data.description}</td>
@@ -15,12 +20,24 @@ const DisplayItemList = (props) => (
     <td>{props.data.category}</td>
     <td>{props.data.per_quanitity_price}</td>
     <td>{props.data.current_stock}</td>
-    <td>{props.data.required_stock}</td>
+    <td>
+      {props.data.required_stock}
+      {props.data.current_stock < props.data.required_stock ? (
+        <Link
+          style={{ marginLeft: 32 }}
+          to={"/createpurchaseorder/" + props.data.product_id}
+        >
+          <img src={orderlogo} width="30" height="30" alt="editlogo" />
+        </Link>
+      ) : (
+        ""
+      )}
+    </td>
     <td style={{ display: "flex" }}>
-      <Link to={"/edit/" + props.data._id}>
+      {/* <Link to={"/edit/" + props.data._id}>
         <img src={editlogo} width="30" height="30" alt="editlogo" />
-      </Link>
-      <div style={{ width: 16 }}></div>
+      </Link> */}
+      {/* <div style={{ width: 32 }}></div> */}
       <Link to={"/delete/" + props.data._id}>
         <img src={deletelogo} width="30" height="30" alt="deletelogo" />
       </Link>
@@ -32,6 +49,7 @@ const notifyEdit = () =>
   toast.info("Item Updated!", { position: "bottom-left" });
 const notifyDelete = () =>
   toast.error("Item Deleted!", { position: "bottom-left" });
+
 export default class InventoryList extends Component {
   constructor(props) {
     super(props);

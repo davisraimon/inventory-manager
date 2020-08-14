@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import PaymentPage from "./PaymentPage";
 
-export default function CreatePurchaseOrder() {
+export default function CreatePurchaseOrder(props) {
   let history = useHistory();
   const [product_id, setproduct_id] = useState("");
   const [brand_id, setbrand_id] = useState("");
@@ -15,6 +15,13 @@ export default function CreatePurchaseOrder() {
   const [requiredstock, setRequireStock] = useState("0");
   const [orderquantity, setOrderquantity] = useState("1");
   const [shippingcost, setShippingcost] = useState("0");
+  useEffect(() => {
+    if (props.match.params.id != 0) {
+      onFocusout();
+    } else {
+      document.getElementById("p_id").focus();
+    }
+  });
   function clearFields() {
     setproduct_id("");
     setbrand_id("");
@@ -26,12 +33,16 @@ export default function CreatePurchaseOrder() {
     setRequireStock("0");
   }
   function onFocusout() {
+    if (props.match.params.id != 0) {
+      setproduct_id(props.match.params.id);
+    }
     axios
       .get("http://localhost:4000/inventory/product_id/" + product_id)
       .then((response) => {
         if (response.data[0] == undefined) {
           document.getElementById("p_id").focus();
         } else {
+          document.getElementById("order_qty").focus();
           setname(response.data[0].name);
           setdesc(response.data[0].description);
           setbrand_id(response.data[0].brand_id);
@@ -194,7 +205,7 @@ export default function CreatePurchaseOrder() {
                 <label>Order Quantity : </label>
                 <input
                   required
-                  id="desc"
+                  id="order_qty"
                   type="text"
                   className="form-control"
                   value={orderquantity}

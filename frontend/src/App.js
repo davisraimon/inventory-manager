@@ -44,7 +44,7 @@ class App extends Component {
           <Route path="/create" component={CreateItem} />
           <Route path="/delete/:id" component={DeleteItem} />
           <Route path="/purchaseorders/" component={PurchaseOrders} />
-          <Route path="/createpurchaseorder/" component={CreatePurchaseOrder} />
+          <Route path="/createpurchaseorder/:id" component={CreatePurchaseOrder} />
         </div>
       </Router>
     );

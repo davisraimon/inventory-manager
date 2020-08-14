@@ -22,6 +22,7 @@ const DisplayItemList = (props) => (
     <td>{props.mst_data.per_quanitity_price}</td>
     <td>{props.data.total_price}</td>
     <td>{props.data.payment_status}</td>
+    <td>{props.data.order_date}</td>
   </tr>
 );
 function badgeColor(caption) {
@@ -78,6 +79,9 @@ export default class PurchaseOrders extends Component {
       var mst = temp.find(
         (element) => element.product_id == currentItem.product_id
       );
+      var datetoday = new Date(currentItem.order_date);
+      var today = datetoday.toLocaleDateString("en-US");
+      currentItem.order_date = today;
       return <DisplayItemList data={currentItem} mst_data={mst} key={i} />;
     });
   }
@@ -91,7 +95,7 @@ export default class PurchaseOrders extends Component {
           className="btn btn-success"
           onClick={() => {
             window.location.replace(
-              "http://localhost:3000/createpurchaseorder"
+              "http://localhost:3000/createpurchaseorder/0"
             );
           }}
           style={{ width: 120, float: "right", marginBottom: 8 }}
@@ -105,11 +109,12 @@ export default class PurchaseOrders extends Component {
               <th>Current Stock</th>
               <th>Required Stock</th>
 
-              <th>Order Quantity</th>
-              <th>Price</th>
+              <th>Order Quantity(NOS)</th>
+              <th>Price($)</th>
 
-              <th>Total Price</th>
+              <th>Total Price($)</th>
               <th>Payment Status</th>
+              <th>Order date</th>
             </tr>
           </thead>
           <tbody>{this.displayItemMstMethod()}</tbody>

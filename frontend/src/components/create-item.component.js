@@ -185,6 +185,7 @@ export default function CreateItem() {
               onClick={clearFields}
             />
             <input
+              readOnly
               value="Cancel"
               className="btn btn-danger"
               onClick={() => {

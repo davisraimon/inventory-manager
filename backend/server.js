@@ -35,6 +35,7 @@ inventory_routes.route("/checkout").post(function (req, res) {
     order_status: req.body.order_status,
     total_price: req.body.total_price,
     order_quantity: req.body.order_quantity,
+    order_date: req.body.order_date,
   });
   payment_order
     .save()

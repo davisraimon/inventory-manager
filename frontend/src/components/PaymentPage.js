@@ -19,12 +19,12 @@ export default function PaymentPage(props) {
   let history = useHistory();
   var datetoday = new Date();
   var today = datetoday.toLocaleDateString("en-US");
-  console.log(today);
+  
 
   var datetomorrow = new Date(datetoday);
   datetomorrow.setDate(datetoday.getDate() + 1);
   var tomorrow = datetomorrow.toLocaleDateString("en-US");
-  console.log(tomorrow);
+  
   function handleToken(token, addresses) {
     const newOrder = {
       payment_status: "success",

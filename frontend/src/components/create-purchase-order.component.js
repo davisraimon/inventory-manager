@@ -17,11 +17,12 @@ export default function CreatePurchaseOrder(props) {
   const [shippingcost, setShippingcost] = useState("0");
   useEffect(() => {
     if (props.match.params.id != 0) {
+      setproduct_id(props.match.params.id);
       onFocusout();
     } else {
       document.getElementById("p_id").focus();
     }
-  });
+  }, []);
   function clearFields() {
     setproduct_id("");
     setbrand_id("");
@@ -33,11 +34,9 @@ export default function CreatePurchaseOrder(props) {
     setRequireStock("0");
   }
   function onFocusout() {
-    if (props.match.params.id != 0) {
-      setproduct_id(props.match.params.id);
-    }
+    var id = props.match.params.id != 0 ? props.match.params.id : product_id;
     axios
-      .get("http://localhost:4000/inventory/product_id/" + product_id)
+      .get("http://localhost:4000/inventory/product_id/" + id)
       .then((response) => {
         if (response.data[0] == undefined) {
           document.getElementById("p_id").focus();

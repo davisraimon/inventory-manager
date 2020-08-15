@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import editlogo from "../edit.jpg";
+import csvlogo from "../csv3.png";
 import deletelogo from "../delete.jpg";
 import orderlogo from "../ordericon.jpg";
 import axios from "axios";
@@ -80,11 +80,22 @@ export default class InventoryList extends Component {
       return <DisplayItemList data={currentItem} key={i} />;
     });
   }
+  downloadCSV() {
+    window.open("http://localhost:4000/inventory/downloadmst/1");
+  }
   render() {
     return (
       <div>
         <ToastContainer></ToastContainer>
         <h3>Inventory Master Data</h3>
+        <button
+          defaultValue="Download"
+          className="btn btn-success"
+          onClick={this.downloadCSV}
+          style={{ width: 48, float: "right", marginBottom: 8, marginLeft: 8 }}
+        >
+          <img src={csvlogo} width="20" height="20" alt="editlogo" />
+        </button>
         <input
           defaultValue="New Item"
           className="btn btn-success"

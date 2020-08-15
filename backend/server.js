@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
+const { Parser } = require("json2csv");
+const fs = require("fs");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const inventory_routes = express.Router();
@@ -26,7 +28,67 @@ app.listen(PORT, function () {
   console.log("Server is running on Port: " + PORT);
 });
 
-// checkout
+// csv download of master
+
+inventory_routes.route("/downloadmst/:option").get(function (req, res) {
+  let option = req.params.option;
+  let currentTable = Inventory;
+  let filename = "";
+  let fields = [];
+  if (option == 1) {
+    currentTable = Inventory;
+    fields = [
+      "product_id",
+      "brand_id",
+      "name",
+      "desciption",
+      "category",
+      "per_quanitity_price",
+      "current_stock",
+      "required_stock",
+    ];
+    filename = "InventoryMaster.csv";
+  } else {
+    fields = [
+      "product_id",
+      "order_status",
+      "order_quantity",
+      "total_price",
+      "payment_status",
+      "order_date",
+    ];
+    currentTable = PurchaseOrders;
+    filename = "PurchaseOrdersMaster.csv";
+  }
+  currentTable.find(function (err, mst) {
+    if (err) {
+      console.log(err);
+    } else {
+      const options = { fields };
+      const parser = new Parser(options);
+      const csv = parser.parse(mst);
+      res.attachment(filename);
+      res.status(200).send(csv);
+    }
+  });
+});
+function csvDownload(mst, filename) {
+  const fields = [
+    "product_id",
+    "brand_id",
+    "name",
+    "desciption",
+    "category",
+    "per_quanitity_price",
+    "current_stock",
+    "required_stock",
+  ];
+  const ops = { fields };
+  const parser = new Parser(ops);
+  const csv = parser.parse(mst);
+  fs.writeFileSync(filename, csv);
+}
+// Payment checkout
 
 inventory_routes.route("/checkout").post(function (req, res) {
   let payment_order = new PurchaseOrders({
@@ -46,6 +108,7 @@ inventory_routes.route("/checkout").post(function (req, res) {
       res.status(400).send("failed");
     });
 });
+
 // Get All Items
 
 inventory_routes.route("/").get(function (req, res) {

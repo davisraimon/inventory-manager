@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import csvlogo from "../csv3.png";
 
 const DisplayItemList = (props) => (
   <tr onDoubleClick={() => {}}>
@@ -85,11 +86,22 @@ export default class PurchaseOrders extends Component {
       return <DisplayItemList data={currentItem} mst_data={mst} key={i} />;
     });
   }
+  downloadCSV() {
+    window.open("http://localhost:4000/inventory/downloadmst/2");
+  }
   render() {
     return (
       <div>
         <ToastContainer />
         <h3>Purchase Orders</h3>
+        <button
+          defaultValue="Download"
+          className="btn btn-success"
+          onClick={this.downloadCSV}
+          style={{ width: 48, float: "right", marginBottom: 8, marginLeft: 8 }}
+        >
+          <img src={csvlogo} width="20" height="20" alt="editlogo" />
+        </button>
         <input
           defaultValue="New Order"
           className="btn btn-success"

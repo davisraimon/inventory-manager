@@ -20,7 +20,6 @@ const DisplayItemList = (props) => (
 
     <td>
       <a
-        onClick
         style={{ width: 100 }}
         className={`${badgeColor(props.data.order_status)}`}
       >
@@ -67,18 +66,20 @@ export default class PurchaseOrders extends Component {
   }
   componentDidMount() {
     axios
-      .get("http://localhost:4000/inventory/")
+      .get("https://inventorybackend.herokuapp.com/inventory/")
       .then((response) => {
-        this.setState({ inventory_mst: response.data });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+        this.state.inventory_mst = response.data;
 
-    axios
-      .get("http://localhost:4000/inventory/purchaseorders/")
-      .then((response) => {
-        this.setState({ purchase_orders: response.data });
+        axios
+          .get(
+            "https://inventorybackend.herokuapp.com/inventory/purchaseorders/"
+          )
+          .then((response) => {
+            this.setState({ purchase_orders: response.data });
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
       })
       .catch(function (error) {
         console.log(error);
@@ -98,7 +99,9 @@ export default class PurchaseOrders extends Component {
     });
   }
   downloadCSV() {
-    window.open("http://localhost:4000/inventory/downloadmst/2");
+    window.open(
+      "https://inventorybackend.herokuapp.com/inventory/downloadmst/2"
+    );
   }
 
   render() {

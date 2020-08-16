@@ -36,10 +36,13 @@ export default function CreatePurchaseOrder(props) {
   function onFocusout() {
     var id = props.match.params.id != 0 ? props.match.params.id : product_id;
     axios
-      .get("http://localhost:4000/inventory/product_id/" + id)
+      .get("https://inventorybackend.herokuapp.com/inventory/product_id/" + id)
       .then((response) => {
         if (response.data[0] == undefined) {
-          document.getElementById("p_id").focus();
+          var focusElement = document.getElementById("p_id");
+          if (focusElement) {
+            focusElement.focus();
+          }
         } else {
           document.getElementById("order_qty").focus();
           setname(response.data[0].name);

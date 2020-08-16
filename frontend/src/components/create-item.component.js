@@ -40,9 +40,14 @@ export default function CreateItem() {
               required_stock: requiredstock,
             };
             axios
-              .post("http://localhost:4000/inventory/add", newItem)
-              .then((res) => console.log(newItem, res.data));
-            history.push({ pathname: "/", toastVisibility: true });
+              .post(
+                "https://inventorybackend.herokuapp.com/inventory/add",
+                newItem
+              )
+              .then((res) => {
+                console.log(newItem, res.data);
+                history.push({ pathname: "/", toastVisibility: true });
+              });
           }}
         >
           <div className="form-group" style={{ width: 400 }}>

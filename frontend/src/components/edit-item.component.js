@@ -6,7 +6,10 @@ export default function EditItem(props) {
   let history = useHistory();
   useEffect(() => {
     axios
-      .get("http://localhost:4000/inventory/" + props.match.params.id)
+      .get(
+        "https://inventorybackend.herokuapp.com/inventory/" +
+          props.match.params.id
+      )
       .then((response) => {
         setproduct_id(response.data.product_id);
         setbrand_id(response.data.brand_id);
@@ -49,12 +52,14 @@ export default function EditItem(props) {
             console.log(updatedItem, "updated");
             axios
               .post(
-                "http://localhost:4000/inventory/update/" +
+                "https://inventorybackend.herokuapp.com/inventory/update/" +
                   props.match.params.id,
                 updatedItem
               )
-              .then((res) => console.log(res.data));
-            history.push({ pathname: "/", toastVisibilityForEdit: true });
+              .then((res) => {
+                console.log(res.data);
+                history.push({ pathname: "/", toastVisibilityForEdit: true });
+              });
           }}
         >
           <div className="form-group" style={{ width: 400 }}>

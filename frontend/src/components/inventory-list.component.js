@@ -66,7 +66,7 @@ export default class InventoryList extends Component {
   }
   componentDidMount() {
     axios
-      .get("http://localhost:4000/inventory/")
+      .get("https://inventorybackend.herokuapp.com/inventory/")
       .then((response) => {
         this.setState({ list: response.data });
       })
@@ -81,7 +81,9 @@ export default class InventoryList extends Component {
     });
   }
   downloadCSV() {
-    window.open("http://localhost:4000/inventory/downloadmst/1");
+    window.open(
+      "https://inventorybackend.herokuapp.com/inventory/downloadmst/1"
+    );
   }
   render() {
     return (

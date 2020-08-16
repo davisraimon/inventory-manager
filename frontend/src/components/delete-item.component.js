@@ -6,7 +6,10 @@ export default function DeleteItem(props) {
   let history = useHistory();
   useEffect(() => {
     axios
-      .get("http://localhost:4000/inventory/delete/" + props.match.params.id)
+      .get(
+        "https://inventorybackend.herokuapp.com/inventory/delete/" +
+          props.match.params.id
+      )
       .then((response) => {
         history.push({ pathname: "/", toastVisibilityForDelete: true });
       })

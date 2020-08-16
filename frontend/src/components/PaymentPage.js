@@ -35,7 +35,10 @@ export default function PaymentPage(props) {
     };
 
     axios
-      .post("http://localhost:4000/inventory/checkout", newOrder)
+      .post(
+        "https://inventorybackend.herokuapp.com/inventory/checkout",
+        newOrder
+      )
       .then((res) => {
         history.push({ pathname: "/purchaseorders", toastVisibility: true });
       });

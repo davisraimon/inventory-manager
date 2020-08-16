@@ -1,4 +1,5 @@
 const express = require("express");
+require("dotenv").config();
 const app = express();
 const bodyParser = require("body-parser");
 const { Parser } = require("json2csv");
@@ -9,16 +10,18 @@ const inventory_routes = express.Router();
 const PORT = 4000;
 let Inventory = require("./inventory.model");
 let PurchaseOrders = require("./purchase-orders.model");
-const stripe = require("stripe")(
-  "sk_test_51HF2pIHVEY85bCgtMiX90XtiOtYT4lk0lVYV5vJukxWQPZy0PY9WrDXLtQv82ZOqCRkWuYX8hjpn78qC5W6wzkP200E33jnEul"
-);
+const stripe = require("stripe")(process.env.STRPE_KEY);
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use("/inventory", inventory_routes);
 
-mongoose.connect("mongodb://127.0.0.1:27017/inventory_mst", {
+// mongoose.connect("mongodb://127.0.0.1:27017/inventory_mst", {
+//   useNewUrlParser: true,
+// });
+mongoose.connect(process.env.MONGODB_URL, {
   useNewUrlParser: true,
+  useUnifiedTopology: true,
 });
 const connection = mongoose.connection;
 connection.once("open", function () {

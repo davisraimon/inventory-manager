@@ -5,7 +5,7 @@ let purchase_orders = new Schema({
     type: String,
   },
   order_status: {
-    type: String,
+    type: Number,
   },
   order_quantity: {
     type: String,

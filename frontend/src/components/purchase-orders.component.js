@@ -1,9 +1,18 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { Modal, Button } from "antd";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import csvlogo from "../csv3.png";
 
+const status = [
+  "Order Placed",
+  "Order Received",
+  "Shipped",
+  "Order Delivered",
+  "Closed",
+  "Cancelled",
+];
 const DisplayItemList = (props) => (
   <tr onDoubleClick={() => {}}>
     <td>{props.data.product_id}</td>
@@ -11,10 +20,11 @@ const DisplayItemList = (props) => (
 
     <td>
       <a
+        onClick
         style={{ width: 100 }}
         className={`${badgeColor(props.data.order_status)}`}
       >
-        {props.data.order_status}
+        {status[props.data.order_status]}
       </a>
     </td>
     <td>{props.mst_data.current_stock}</td>
@@ -28,19 +38,17 @@ const DisplayItemList = (props) => (
 );
 function badgeColor(caption) {
   switch (caption) {
-    case "Order Delivered":
+    case 3:
       return "badge badge-success";
-    case "Order Recieved":
+    case 1:
       return "badge badge-primary";
-    case "Order Placed":
+    case 0:
       return "badge badge-light";
-    case "New":
-      return "badge badge-light";
-    case "Shipped":
+    case 2:
       return "badge badge-warning";
-    case "Closed":
+    case 4:
       return "badge badge-secondary";
-    case "Cancelled":
+    case 5:
       return "badge badge-danger";
   }
 }
@@ -49,7 +57,10 @@ const notify = () => toast.info("Order Placed!", { position: "bottom-left" });
 export default class PurchaseOrders extends Component {
   constructor(props) {
     super(props);
-    this.state = { purchase_orders: [], inventory_mst: [] };
+    this.state = {
+      purchase_orders: [],
+      inventory_mst: [],
+    };
     if (props.location.toastVisibility) {
       notify();
     }
@@ -89,6 +100,7 @@ export default class PurchaseOrders extends Component {
   downloadCSV() {
     window.open("http://localhost:4000/inventory/downloadmst/2");
   }
+
   render() {
     return (
       <div>

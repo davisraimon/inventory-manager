@@ -19,17 +19,16 @@ export default function PaymentPage(props) {
   let history = useHistory();
   var datetoday = new Date();
   var today = datetoday.toLocaleDateString("en-US");
-  
 
   var datetomorrow = new Date(datetoday);
   datetomorrow.setDate(datetoday.getDate() + 1);
   var tomorrow = datetomorrow.toLocaleDateString("en-US");
-  
+
   function handleToken(token, addresses) {
     const newOrder = {
       payment_status: "success",
       product_id: props.product_id,
-      order_status: "Order Placed",
+      order_status: 0,
       total_price: props.amount,
       order_quantity: props.order_quantity,
       order_date: today,

@@ -6,6 +6,8 @@ import orderlogo from "../ordericon.jpg";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { TextField, InputAdornment } from "@material-ui/core";
+import SearchIcon from "@material-ui/icons/Search";
 
 const DisplayItemList = (props) => (
   <tr
@@ -53,7 +55,8 @@ const notifyDelete = () =>
 export default class InventoryList extends Component {
   constructor(props) {
     super(props);
-    this.state = { list: [] };
+    this.state = { list: [], backupforfilter: [] };
+    this.filterResults = this.filterResults.bind(this);
     if (props.location.toastVisibility) {
       notifyAdd();
     }
@@ -68,16 +71,22 @@ export default class InventoryList extends Component {
     axios
       .get("https://inventorybackend.herokuapp.com/inventory/")
       .then((response) => {
-        this.setState({ list: response.data });
+        this.setState({ list: response.data, backupforfilter: response.data });
       })
       .catch(function (error) {
         console.log(error);
       });
   }
-
   displayItemMstMethod() {
     return this.state.list.map(function (currentItem, i) {
       return <DisplayItemList data={currentItem} key={i} />;
+    });
+  }
+  filterResults(e) {
+    this.setState({
+      list: this.state.backupforfilter.filter((item) => {
+        return item.product_id.includes(e.target.value);
+      }),
     });
   }
   downloadCSV() {
@@ -90,6 +99,28 @@ export default class InventoryList extends Component {
       <div>
         <ToastContainer></ToastContainer>
         <h3>Inventory Master Data</h3>
+        <TextField
+          type="text"
+          variant="outlined"
+          size="small"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+          className="form-control"
+          onChange={this.filterResults}
+          placeholder="Product ID"
+          style={{
+            width: 136,
+            float: "left",
+            marginBottom: 16,
+            marginTop: 8,
+            maxHeight: 32,
+          }}
+        ></TextField>
         <button
           defaultValue="Download"
           className="btn btn-success"

@@ -4,6 +4,8 @@ import { Modal, Button } from "antd";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import csvlogo from "../csv3.png";
+import { TextField, InputAdornment } from "@material-ui/core";
+import SearchIcon from "@material-ui/icons/Search";
 
 const status = [
   "Order Placed",
@@ -59,7 +61,9 @@ export default class PurchaseOrders extends Component {
     this.state = {
       purchase_orders: [],
       inventory_mst: [],
+      backupforfilter: [],
     };
+    this.filterResults = this.filterResults.bind(this);
     if (props.location.toastVisibility) {
       notify();
     }
@@ -75,7 +79,10 @@ export default class PurchaseOrders extends Component {
             "https://inventorybackend.herokuapp.com/inventory/purchaseorders/"
           )
           .then((response) => {
-            this.setState({ purchase_orders: response.data });
+            this.setState({
+              purchase_orders: response.data,
+              backupforfilter: response.data,
+            });
           })
           .catch(function (error) {
             console.log(error);
@@ -103,12 +110,40 @@ export default class PurchaseOrders extends Component {
       "https://inventorybackend.herokuapp.com/inventory/downloadmst/2"
     );
   }
-
+  filterResults(e) {
+    this.setState({
+      purchase_orders: this.state.backupforfilter.filter((item) => {
+        return item.product_id.includes(e.target.value);
+      }),
+    });
+  }
   render() {
     return (
       <div>
         <ToastContainer />
         <h3>Purchase Orders</h3>
+        <TextField
+          type="text"
+          variant="outlined"
+          size="small"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+          className="form-control"
+          onChange={this.filterResults}
+          placeholder="Product ID"
+          style={{
+            width: 136,
+            float: "left",
+            marginBottom: 16,
+            marginTop: 8,
+            maxHeight: 32,
+          }}
+        ></TextField>
         <button
           defaultValue="Download"
           className="btn btn-success"

@@ -50,7 +50,6 @@ export default function CreateItem() {
               });
           }}
         >
-          {" "}
           <div style={{ display: "flex" }}>
             <div>
               <div className="form-group" style={{ width: 400 }}>

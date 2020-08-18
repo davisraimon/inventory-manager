@@ -62,146 +62,156 @@ export default function EditItem(props) {
               });
           }}
         >
-          <div className="form-group" style={{ width: 400 }}>
-            <label>Category : </label>
-            <br />
-            <select
-              id="cate"
-              value={category}
-              style={{ width: 400 }}
-              onChange={(e) => {
-                setcategory(e.target.value);
-              }}
-            >
-              <option id="0" value={"None"}>
-                None
-              </option>
-              <option id="1" value={"Electronics"}>
-                Electronics
-              </option>
-              <option id="2" value={"Fashion"}>
-                Fashion
-              </option>
-              <option id="3" value={"Grocery"}>
-                Grocery
-              </option>
-              <option id="4" value={"Cutlery"}>
-                Cutlery
-              </option>
-              <option id="5" value={"Frozen"}>
-                Frozen
-              </option>
-              <option id="6" value={"Stationary"}>
-                Stationary
-              </option>
-            </select>
-          </div>
-          <div className="form-group" style={{ width: 400 }}>
-            <label>Product ID : </label>
-            <input
-              required
-              id="p_id"
-              type="text"
-              className="form-control"
-              value={product_id}
-              onChange={(e) => {
-                setproduct_id(e.target.value);
-              }}
-            />
-          </div>
-          <div className="form-group" style={{ width: 400 }}>
-            <label>Product Name : </label>
-            <input
-              required
-              id="name"
-              type="text"
-              className="form-control"
-              value={name}
-              onChange={(e) => {
-                setname(e.target.value);
-              }}
-            />
-          </div>
-          <div className="form-group" style={{ width: 400 }}>
-            <label>Description : </label>
-            <input
-              id="desc"
-              type="text"
-              className="form-control"
-              value={desc}
-              onChange={(e) => {
-                setdesc(e.target.value);
-              }}
-            />
-          </div>
-          <div className="form-group" style={{ width: 400 }}>
-            <label>Brand ID : </label>
-            <input
-              id="b_id"
-              type="text"
-              className="form-control"
-              value={brand_id}
-              onChange={(e) => {
-                setbrand_id(e.target.value);
-              }}
-            />
-          </div>
-          <div className="form-group" style={{ width: 400 }}>
-            <label>Price : </label>
-            <input
-              required
-              id="desc"
-              type="text"
-              className="form-control"
-              value={price}
-              onChange={(e) => {
-                setprice(e.target.value);
-              }}
-            />
-          </div>
-          <div className="form-group" style={{ width: 400, display: "flex" }}>
+          <div style={{ display: "flex" }}>
             <div>
-              <label>Current Stock: </label>
-              <input
-                id="desc"
-                type="text"
-                className="form-control"
-                value={currentstock}
-                onChange={(e) => {
-                  setCurrentStock(e.target.value);
-                }}
-              />
+              <div className="form-group" style={{ width: 400 }}>
+                <label>Category : </label>
+                <br />
+                <select
+                  class="custom-select mr-sm-2"
+                  id="cate"
+                  value={category}
+                  style={{ width: 400 }}
+                  onChange={(e) => {
+                    setcategory(e.target.value);
+                  }}
+                >
+                  <option id="0" value={"None"}>
+                    None
+                  </option>
+                  <option id="1" value={"Electronics"}>
+                    Electronics
+                  </option>
+                  <option id="2" value={"Fashion"}>
+                    Fashion
+                  </option>
+                  <option id="3" value={"Grocery"}>
+                    Grocery
+                  </option>
+                  <option id="4" value={"Cutlery"}>
+                    Cutlery
+                  </option>
+                  <option id="5" value={"Frozen"}>
+                    Frozen
+                  </option>
+                  <option id="6" value={"Stationary"}>
+                    Stationary
+                  </option>
+                </select>
+              </div>
+              <div className="form-group" style={{ width: 400 }}>
+                <label>Product ID : </label>
+                <input
+                  required
+                  id="p_id"
+                  type="text"
+                  className="form-control"
+                  value={product_id}
+                  onChange={(e) => {
+                    setproduct_id(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="form-group" style={{ width: 400 }}>
+                <label>Product Name : </label>
+                <input
+                  required
+                  id="name"
+                  type="text"
+                  className="form-control"
+                  value={name}
+                  onChange={(e) => {
+                    setname(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="form-group" style={{ width: 400 }}>
+                <label>Description : </label>
+                <input
+                  id="desc"
+                  type="text"
+                  className="form-control"
+                  value={desc}
+                  onChange={(e) => {
+                    setdesc(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="form-group" style={{ width: 400 }}>
+                <label>Brand ID : </label>
+                <input
+                  id="b_id"
+                  type="text"
+                  className="form-control"
+                  value={brand_id}
+                  onChange={(e) => {
+                    setbrand_id(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  type="submit"
+                  value="Update"
+                  className="btn btn-primary"
+                  style={{ width: 196 }}
+                />
+                <input
+                  readOnly
+                  value="Cancel"
+                  className="btn btn-danger"
+                  onClick={() => {
+                    history.push("/");
+                  }}
+                  style={{ marginLeft: 8, width: 196 }}
+                />
+              </div>
             </div>
-            <div style={{ width: 8 }}></div>
-            <div>
-              <label>Required Stock: </label>
-              <input
-                id="desc"
-                type="text"
-                className="form-control"
-                value={requiredstock}
-                onChange={(e) => {
-                  setRequireStock(e.target.value);
-                }}
-              />
+            <div style={{ marginLeft: 16 }}>
+              <div className="form-group" style={{ width: 400 }}>
+                <label>Price : </label>
+                <input
+                  required
+                  id="desc"
+                  type="text"
+                  className="form-control"
+                  value={price}
+                  onChange={(e) => {
+                    setprice(e.target.value);
+                  }}
+                />
+              </div>
+              <div
+                className="form-group"
+                style={{ width: 400, display: "flex" }}
+              >
+                <div>
+                  <label>Current Stock: </label>
+                  <input
+                    id="desc"
+                    type="text"
+                    className="form-control"
+                    value={currentstock}
+                    onChange={(e) => {
+                      setCurrentStock(e.target.value);
+                    }}
+                  />
+                </div>
+                <div style={{ width: 8 }}></div>
+                <div>
+                  <label>Required Stock: </label>
+                  <input
+                    id="desc"
+                    type="text"
+                    className="form-control"
+                    value={requiredstock}
+                    onChange={(e) => {
+                      setRequireStock(e.target.value);
+                    }}
+                  />
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="form-group">
-            <input
-              type="submit"
-              value="Update"
-              className="btn btn-primary"
-              style={{ width: 196 }}
-            />
-            <input
-              readOnly
-              value="Cancel"
-              className="btn btn-danger"
-              onClick={() => {
-                history.push("/");
-              }}
-              style={{ marginLeft: 8, width: 196 }}
-            />
           </div>
         </form>
       </div>

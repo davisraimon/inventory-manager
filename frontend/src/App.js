@@ -7,6 +7,7 @@ import InventoryList from "./components/inventory-list.component";
 import DeleteItem from "./components/delete-item.component";
 import PurchaseOrders from "./components/purchase-orders.component";
 import CreatePurchaseOrder from "./components/create-purchase-order.component";
+import UpdatePurchaseOrder from "./components/update-purchase-order.component";
 
 import logo from "./logo.jpg";
 
@@ -44,7 +45,14 @@ class App extends Component {
           <Route path="/create" component={CreateItem} />
           <Route path="/delete/:id" component={DeleteItem} />
           <Route path="/purchaseorders/" component={PurchaseOrders} />
-          <Route path="/createpurchaseorder/:id" component={CreatePurchaseOrder} />
+          <Route
+            path="/createpurchaseorder/:id"
+            component={CreatePurchaseOrder}
+          />
+          <Route
+            path="/updatepurchaseorder/:id"
+            component={UpdatePurchaseOrder}
+          />
         </div>
       </Router>
     );

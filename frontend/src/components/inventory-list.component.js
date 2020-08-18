@@ -8,6 +8,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { TextField, InputAdornment } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
+import { Modal, Button } from "antd";
+import "antd/dist/antd.css";
 
 const DisplayItemList = (props) => (
   <tr
@@ -24,7 +26,8 @@ const DisplayItemList = (props) => (
     <td>{props.data.current_stock}</td>
     <td>
       {props.data.required_stock}
-      {props.data.current_stock < props.data.required_stock ? (
+      {parseInt(props.data.current_stock) <
+      parseInt(props.data.required_stock) ? (
         <Link
           style={{ marginLeft: 32 }}
           to={"/createpurchaseorder/" + props.data.product_id}
@@ -41,7 +44,12 @@ const DisplayItemList = (props) => (
       </Link> */}
       {/* <div style={{ width: 32 }}></div> */}
       <Link to={"/delete/" + props.data._id}>
-        <img src={deletelogo} width="30" height="30" alt="deletelogo" />
+      <input
+        style={{height:24,width:80}}
+        value="Delete"
+        readOnly
+        className="btn btn-outline-danger"     
+      />
       </Link>
     </td>
   </tr>
@@ -55,7 +63,12 @@ const notifyDelete = () =>
 export default class InventoryList extends Component {
   constructor(props) {
     super(props);
-    this.state = { list: [], backupforfilter: [] };
+    this.state = {
+      list: [],
+      backupforfilter: [],
+      modalVisible: false,
+      currentID: "",
+    };
     this.filterResults = this.filterResults.bind(this);
     if (props.location.toastVisibility) {
       notifyAdd();
@@ -66,6 +79,9 @@ export default class InventoryList extends Component {
     if (props.location.toastVisibilityForEdit) {
       notifyEdit();
     }
+  }
+  setModalVisible(visibility) {
+    this.setState({ modalVisible: visibility });
   }
   componentDidMount() {
     axios
@@ -116,8 +132,7 @@ export default class InventoryList extends Component {
           style={{
             width: 136,
             float: "left",
-            marginBottom: 16,
-            marginTop: 8,
+            marginBottom: 8,
             maxHeight: 32,
           }}
         ></TextField>

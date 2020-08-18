@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import csvlogo from "../csv3.png";
 import { TextField, InputAdornment } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
+import { Link } from "react-router-dom";
 
 const status = [
   "Order Placed",
@@ -23,6 +24,9 @@ const DisplayItemList = (props) => (
     <td>
       <a
         style={{ width: 100 }}
+        onClick={() => {
+          alert(props.data._id);
+        }}
         className={`${badgeColor(props.data.order_status)}`}
       >
         {status[props.data.order_status]}
@@ -35,6 +39,20 @@ const DisplayItemList = (props) => (
     <td>{props.data.total_price}</td>
     <td>{props.data.payment_status}</td>
     <td>{props.data.order_date}</td>
+    <td>
+      {props.data.order_status == 0 || props.data.order_status == 1 ? (
+        <Link to={"/updatepurchaseorder/" + props.data._id} value={"Cancel"}>
+          <input
+            style={{ height: 24, width: 80 }}
+            value="Cancel"
+            readOnly
+            className="btn btn-outline-danger"
+          />
+        </Link>
+      ) : (
+        ""
+      )}
+    </td>
   </tr>
 );
 function badgeColor(caption) {
@@ -53,7 +71,6 @@ function badgeColor(caption) {
       return "badge badge-danger";
   }
 }
-
 const notify = () => toast.info("Order Placed!", { position: "bottom-left" });
 export default class PurchaseOrders extends Component {
   constructor(props) {
@@ -117,6 +134,7 @@ export default class PurchaseOrders extends Component {
       }),
     });
   }
+
   render() {
     return (
       <div>
@@ -139,8 +157,7 @@ export default class PurchaseOrders extends Component {
           style={{
             width: 136,
             float: "left",
-            marginBottom: 16,
-            marginTop: 8,
+            marginBottom: 8,
             maxHeight: 32,
           }}
         ></TextField>
@@ -177,6 +194,7 @@ export default class PurchaseOrders extends Component {
               <th>Total Price($)</th>
               <th>Payment Status</th>
               <th>Order date</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>{this.displayItemMstMethod()}</tbody>
